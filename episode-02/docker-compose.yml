@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  backend:
+    build: ./backend
+    container_name: ep2_backend_2.0
+    environment:
+      # Backend connects to MongoDB at mongo3:27017 inside the network
+      MONGO_URI: "mongodb://mongo4:27017/mydb"
+    ports:
+      - "3010:8000"
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: ep2_frontend_2.0
+    depends_on:
+      - backend
+    ports:
+      - "8089:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

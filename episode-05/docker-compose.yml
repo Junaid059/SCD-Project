@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  backend:
+    build: ./backend
+    container_name: ep4_backend_5.0
+    environment:
+     
+      MONGO_URI: "mongodb://mongo4:27017/mydb"
+    ports:
+      - "3013:8000"
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: ep4_frontend_5.0
+    depends_on:
+      - backend
+    ports:
+      - "8092:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

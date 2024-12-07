@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-episode5
+  labels:
+    app: backend
+    episode: "5"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+      episode: "5"
+  template:
+    metadata:
+      labels:
+        app: backend
+        episode: "5"
+    spec:
+      containers:
+      - name: backend
+        image: junaid757/episode-05_backend 
+        ports:
+        - containerPort: 5004
+        env:
+        - name: NODE_ENV
+          value: production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service-episode5
+  labels:
+    app: backend
+    episode: "5"
+spec:
+  selector:
+    app: backend
+    episode: "5"
+  ports:
+  - protocol: TCP
+    port: 5004
+    targetPort: 5004
+    nodePort: 30011
+  type: NodePort
+  

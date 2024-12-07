@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-episode4
+  labels:
+    app: frontend
+    episode: "4"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+      episode: "4"
+  template:
+    metadata:
+      labels:
+        app: frontend
+        episode: "4"
+    spec:
+      containers:
+      - name: frontend
+        image: junaid757/episode-04_frontend
+        ports:
+        - containerPort: 83
+        env:
+        - name: NODE_ENV
+          value: production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service-episode4
+  labels:
+    app: frontend
+    episode: "4"
+spec:
+  selector:
+    app: frontend
+    episode: "4"
+  ports:
+  - protocol: TCP
+    port: 83
+    targetPort: 83
+  type: LoadBalancer
